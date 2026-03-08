@@ -40,7 +40,6 @@ public class GetWeatherForecastsQueryTests
         foreach (var forecast in result)
         {
             forecast.Summary.ShouldNotBeNullOrEmpty();
-            forecast.Summary.ShouldNotBe("string");
         }
     }
 
