@@ -24,13 +24,7 @@ public static class DependencyInjection
         builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-#if (UsePostgreSQL)
             options.UseNpgsql(connectionString);
-#elif (UseSqlServer)
-            options.UseSqlServer(connectionString);
-#else
-            options.UseSqlite(connectionString);
-#endif
             options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
         });
 
