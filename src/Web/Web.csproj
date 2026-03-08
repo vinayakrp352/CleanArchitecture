@@ -12,6 +12,7 @@
     <OpenApiDocumentsDirectory>./wwwroot/openapi/</OpenApiDocumentsDirectory>
     <OpenApiGenerateDocumentsOptions>--file-name v1</OpenApiGenerateDocumentsOptions>
     <!--#endif-->
+    <UserSecretsId>03699fb6-3633-41fe-83fc-117275b9ea0f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -78,7 +79,7 @@
       <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
       <!--#endif-->
       <DistFiles Include="$(SpaRoot)build\**" Condition="'$(UseReact)' == 'True'" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
