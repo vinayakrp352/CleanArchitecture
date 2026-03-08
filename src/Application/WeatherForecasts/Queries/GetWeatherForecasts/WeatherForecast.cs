@@ -8,5 +8,17 @@ public class WeatherForecast
 
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-    public string Summary { get; init; } = string.Empty;
+    public string Summary => TemperatureC switch
+    {
+        < 0 => "Freezing",
+        < 5 => "Bracing",
+        < 10 => "Chilly",
+        < 15 => "Cool",
+        < 20 => "Mild",
+        < 25 => "Warm",
+        < 30 => "Balmy",
+        < 40 => "Hot",
+        < 50 => "Sweltering",
+        _ => "Scorching"
+    };
 }
