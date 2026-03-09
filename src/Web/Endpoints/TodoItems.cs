@@ -3,6 +3,7 @@ using CleanArchitecture.Application.TodoItems.Commands.CreateTodoItem;
 using CleanArchitecture.Application.TodoItems.Commands.DeleteTodoItem;
 using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItemDetail;
+using CleanArchitecture.Application.TodoItems.Queries.GetTodoItemsSummary;
 using CleanArchitecture.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -13,10 +14,21 @@ public class TodoItems : EndpointGroupBase
     public override void Map(RouteGroupBuilder groupBuilder)
     {
         groupBuilder.MapGet(GetTodoItemsWithPagination).RequireAuthorization();
+        groupBuilder.MapGet(GetTodoItemsSummary, "summary").RequireAuthorization();
         groupBuilder.MapPost(CreateTodoItem).RequireAuthorization();
         groupBuilder.MapPut(UpdateTodoItem, "{id}").RequireAuthorization();
         groupBuilder.MapPatch(UpdateTodoItemDetail, "UpdateDetail/{id}").RequireAuthorization();
         groupBuilder.MapDelete(DeleteTodoItem, "{id}").RequireAuthorization();
+    }
+
+    [EndpointName(nameof(GetTodoItemsSummary))]
+    [EndpointSummary("Get Todo Items Summary")]
+    [EndpointDescription("Returns aggregate statistics for all todo items, including total, completed, pending counts, and breakdown by priority.")]
+    public async Task<Ok<TodoItemsSummaryVm>> GetTodoItemsSummary(ISender sender)
+    {
+        var result = await sender.Send(new GetTodoItemsSummaryQuery());
+
+        return TypedResults.Ok(result);
     }
 
     [EndpointName(nameof(GetTodoItemsWithPagination))]
