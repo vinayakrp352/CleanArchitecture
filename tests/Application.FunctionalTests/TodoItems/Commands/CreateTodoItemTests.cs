@@ -18,6 +18,14 @@ public class CreateTodoItemTests : BaseTestFixture
     }
 
     [Test]
+    public async Task ShouldRequireNonEmptyTitle()
+    {
+        var command = new CreateTodoItemCommand { Title = string.Empty };
+
+        await Should.ThrowAsync<ValidationException>(() => SendAsync(command));
+    }
+
+    [Test]
     public async Task ShouldCreateTodoItem()
     {
         var userId = await RunAsDefaultUserAsync();
